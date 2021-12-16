@@ -12,21 +12,33 @@
       href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css"
     />
     <style>
-      .header{display:flex;align-items:center;min-height:50px;padding:.5rem 1rem;background-image:linear-gradient(284deg,#fedd4e,#fcb43a);color:#fff;margin-bottom:1rem}.header a{color:#fff;text-decoration:none}.header-title{font-size:1.2rem;font-weight:400}.header-title:after{content:" ▸ ";padding:0 .5rem}.header-subtitle{font-size:1.2rem}.container{max-width:1200px;margin:0 auto;padding:1rem}.search-panel{display:flex}.search-panel__filters{flex:1}.search-panel__results{flex:3}.ais-Highlight-highlighted{color:inherit;font-size:inherit}#searchbox{margin-bottom:2rem}#pagination{margin:2rem auto;text-align:center}
+      body,h1{margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}
     </style>
     <style>
-      body,h1{margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}
+      .header{display:flex;align-items:center;min-height:50px;padding:.5rem 1rem;background-image:linear-gradient(284deg,#fedd4e,#fcb43a);color:#fff;margin-bottom:1rem}.header a{color:#fff;text-decoration:none}.header-title{font-size:1.2rem;font-weight:400}.header-title:after{content:" ▸ ";padding:0 .5rem}.header-subtitle{font-size:1.2rem}.container{max-width:1200px;margin:0 auto;padding:1rem}.filters,.search-panel{display:flex}.filters{flex-direction:column;margin-left:1rem}.search-panel__filters{flex:1}.search-panel__results{flex:3}.ais-Highlight-highlighted{color:inherit;font-size:inherit}#searchbox{margin-bottom:2rem}#pagination{margin:2rem auto;text-align:center}
     </style>
     <title>december-challenge</title>
   </head>
   <body>
     <header class="header">
       <h1 class="header-title"><a href="/">december-challenge</a></h1>
+      <p class="header-subtitle">
+        using
+        <a href="https://github.com/algolia/instantsearch.js">
+          InstantSearch.js
+        </a>
+      </p>
     </header>
     <div class="container">
       <div class="search-panel">
         <div class="search-panel__filters">
           <div id="dynamic-widgets"></div>
+        </div>
+        <div class="filters">
+          <div id="clear-refinements"></div>
+          <div id="actors-list"></div>
+          <div id="genre-list"></div>
+          <div id="released-year"></div>
         </div>
         <div class="search-panel__results">
           <div id="searchbox"></div>
@@ -34,15 +46,13 @@
         </div>
       </div>
       <div id="pagination"></div>
-      <div id="clear-refinements"></div>
-      <div id="actors-list"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.10.5/dist/algoliasearch-lite.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.35.0"></script>
     <script>
       parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"vZyd":[function(require,module,exports) {
-var t=window,e=t.algoliasearch,i=t.instantsearch,n=e("latency","56f24e4276091e774e8157fe4b8b11f6"),r=i({indexName:"movies",searchClient:n});r.addWidgets([i.widgets.searchBox({container:"#searchbox"}),i.widgets.hits({container:"#hits",templates:{item:'\n<article>\n  <h1>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h1>\n  <p>{{#helpers.highlight}}{ "attribute": "year" }{{/helpers.highlight}}</p>\n  <p>{{#helpers.highlight}}{ "attribute": "actors" }{{/helpers.highlight}}</p>\n</article>\n'}}),i.widgets.configure({facets:["*"],maxValuesPerFacet:20}),i.widgets.dynamicWidgets({container:"#dynamic-widgets",fallbackWidget:function(t){var e=t.container,n=t.attribute;return i.widgets.refinementList({container:e,attribute:n})},widgets:[function(t){return i.widgets.refinementList({container:t,attribute:"year"})},function(t){return i.widgets.refinementList({container:t,attribute:"genre"})},function(t){return i.widgets.refinementList({container:t,attribute:"actors"})},function(t){return i.widgets.refinementList({container:t,attribute:"rating"})},function(t){return i.widgets.refinementList({container:t,attribute:"actor_facets"})}]}),i.widgets.pagination({container:"#pagination"}),i.widgets.clearRefinements({container:"#clear-refinements"}),i.widgets.refinementList({container:"#actors-list",attribute:"actors",searchable:!0,operator:"and"}),i.widgets.configure({hitsPerPage:8})]),r.start();
+var e=window,t=e.algoliasearch,i=e.instantsearch,n=t("latency","56f24e4276091e774e8157fe4b8b11f6"),r=i({indexName:"movies",searchClient:n});r.addWidgets([i.widgets.searchBox({container:"#searchbox"}),i.widgets.clearRefinements({container:"#clear-refinements"}),i.widgets.refinementList({container:"#actors-list",attribute:"actors",searchable:!0,operator:"and"}),i.widgets.refinementList({container:"#genre-list",attribute:"genre",searchable:!0}),i.widgets.refinementList({container:"#released-year",attribute:"year",searchable:!0}),i.widgets.hits({container:"#hits",templates:{item:'\n<article>\n  <h1>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h1>\n  <p>{{#helpers.highlight}}{ "attribute": "year" }{{/helpers.highlight}}</p>\n  <p>{{#helpers.highlight}}{ "attribute": "score" }{{/helpers.highlight}}</p>\n</article>\n'}}),i.widgets.configure({facets:["*"],maxValuesPerFacet:20}),i.widgets.dynamicWidgets({container:"#dynamic-widgets",fallbackWidget:function(e){var t=e.container,n=e.attribute;return i.widgets.refinementList({container:t,attribute:n})},widgets:[function(e){return i.widgets.refinementList({container:e,attribute:"year"})},function(e){return i.widgets.refinementList({container:e,attribute:"genre"})},function(e){return i.widgets.refinementList({container:e,attribute:"actors"})},function(e){return i.widgets.refinementList({container:e,attribute:"rating"})},function(e){return i.widgets.refinementList({container:e,attribute:"actor_facets"})}]}),i.widgets.pagination({container:"#pagination"}),i.widgets.configure({hitsPerPage:8})]),r.start();
 },{}]},{},["vZyd"], null)
-    </script>>
+    </script>
   </body>
 </html>
